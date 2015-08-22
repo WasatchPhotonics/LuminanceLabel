@@ -13,6 +13,9 @@ from luminancelabel import rotate
 
 class Test(unittest.TestCase):
 
+    def setUp(self):
+        self.app = QtGui.QApplication(sys.argv)
+        self.form = rotate.Rotate()
 
     def tearDown(self):
         """ Are you seeing segfaults after the tests complete
@@ -26,13 +29,13 @@ class Test(unittest.TestCase):
         python -u -m unittest test_rotate.Test.test_XYZ
 
         """
+        #self.app.processEvents()
+        self.form.setParent(None)
+        self.app.closeAllWindows()
+        QtGui.QApplication.quit() 
         pass
 
     def test_create_window_components(self):
-        return
-        self.app = QtGui.QApplication(sys.argv)
-        self.form = rotate.Rotate()
-
         self.assertEqual(self.form.lblLuminance.text(), "Default")
 
         # Designator needs to close itself after 1 second
@@ -50,14 +53,10 @@ class Test(unittest.TestCase):
         svgWidget = all_svg[0]
         self.assertEqual(svgWidget.width(), 0)
         self.assertEqual(svgWidget.height(), 600)
-        QtTest.QTest.qWait(2000)
 
 
     def test_animate_components(self):
-        return
-        self.app = QtGui.QApplication(sys.argv)
-        self.form = rotate.Rotate()
-        
+
         # Trigger the startup animation, make sure end state of svg
         # widget is full extent dimensions
         self.form.startup_animation()
@@ -71,39 +70,17 @@ class Test(unittest.TestCase):
     
         # animated out side is not quite 600
         self.assertEqual(svgWidget.height(), 576)
-        QtTest.QTest.qWait(2000)
 
-    def test_luminance_computation(self):
-        self.app = QtGui.QApplication(sys.argv)
-        self.form = rotate.Rotate()
-        # Place a controlled widget on the screen
-        bw = rotate.BackgroundWidget()
-        QtTest.QTest.qWait(500)
-
-        # Wait for both widgets to exist, then raise them in order to
-        # ensure that the background widget is behind the luminance
-        # designator
-        bw.raise_()
-        self.form.raise_()
-
-        # Trigger the startup animation
-        self.form.startup_animation()
-
-        # Delay for visualization puposes
-        QtTest.QTest.qWait(1500)
-
-        # From the entire window, grab just a square region inside the
-        # designator rotation area
-        avg = self.form.get_and_process_region()
-        self.assertEqual(float(avg), 0.25)
-
-        # Change the color of the widget, repeat check
-        bw.setStyleSheet( "QWidget { background-color: red}")
-        QtTest.QTest.qWait(100)
-        avg = self.form.get_and_process_region()
-        self.assertEqual(float(avg), 0.33)
-        QtTest.QTest.qWait(2000)
-
+        #  !!!!!!!!!!!!!!!!!!!!! @@@@@@@@@@@@@@@@@@@@@@@               #
+        #
+        #  Don't wait for longer than the close. This leads to failures
+        #  of the nose. Seriously, it just quits with no information
+        #  printed. No "Ran X test..", no coverage summary, no segfault
+        #  info, nothing. Same for unittest. Leaving this in here for a
+        #  reminder
+        #
+        #  !!!!!!!!!!!!!!!!!!!!! @@@@@@@@@@@@@@@@@@@@@@@               #
+        QtTest.QTest.qWait(10)
 
 if __name__ == "__main__":
     unittest.main()

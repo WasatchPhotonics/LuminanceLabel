@@ -107,7 +107,6 @@ class Rotate(QtGui.QWidget):
         print quit_msg
         self.closeTimer.stop()
         self.close()
-        sys.exit(1)
 
     def get_and_process_region(self):
         """ Use Qt's grabWindow function, convert to QImage, and process
