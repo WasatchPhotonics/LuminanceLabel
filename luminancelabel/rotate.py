@@ -140,60 +140,6 @@ class Rotate(QtGui.QWidget):
         #print "Computed: %0.2f" % numpy.average(all_pixels)    
         return "%0.2f" % numpy.average(all_pixels)
    
-    def get_region(self):
-        # SVG rotation center is approximately 382, 54 in inkscape
-        # coordinates
-        grab_width = 100
-        grab_height = 100
-        window_centerX = 382
-        window_centerY = 600 - 533 # inkscape coordinates
-
-        # Relative to the widget
-        stX = window_centerX - (grab_width / 2)
-        stY = window_centerY - (grab_height / 2)
-
-        # Now find the current position of the widget and add that to
-        # the starting coordinates
-        stX += self.x()
-        stY += self.y()
-
-        desktop = QtGui.QApplication.desktop().winId()
-        grb = QtGui.QPixmap.grabWindow
-
-        result = grb(desktop, stX, stY, grab_width, grab_height)
-        result.save("test.png")
-
-    def process_sub_region(self, in_filename="test.png"):
-        """ Open the file saved be get_region in PIL, and compute the
-        luminance number for a sub-region of 20x20 at the center of the
-        image.
-        """
-        width, height = (20, 20)
-        stX = 40
-        stY = 40
-        try:
-            region = Image.open(in_filename)
-            pixels = region.load() 
-            all_pixels = []
-   
-            x = stX 
-            while x < (stX + width):
-                y = stY
-                while y < (stY + height):
-                    cpixel = pixels[x, y]
-                    print "PILLOW pixel at %s,%s is %s" % (x, y, cpixel)
-                    bw_value = sum(cpixel) / len(cpixel)
-                    #print "pixel: %s, %s" % (cpixel, bw_value)
-                    all_pixels.append(bw_value)
-                    y += 1
-
-                x += 1
-        
-            return numpy.average(all_pixels)
-        except:
-            print "Problem: " + str(sys.exc_info())
-            return 0
-
 
 class BackgroundWidget(QtGui.QWidget):
     """ QTest configuration only permits one QApplication. Use this

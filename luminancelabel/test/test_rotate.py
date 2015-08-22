@@ -85,28 +85,14 @@ class Test(unittest.TestCase):
 
         # From the entire window, grab just a square region inside the
         # designator rotation area
-        self.form.get_region()
+        avg = self.form.get_and_process_region()
+        self.assertEqual(float(avg), 0.25)
 
-        # Make sure the captured image is 100x100 for easier
-        # visualization of where it is processing
-        from PIL import Image
-        region = Image.open("test.png")
-        width, height = region.size
-        self.assertEqual(width, 100)
-        self.assertEqual(height, 100)
-
-        # Make sure average luminance matches the backround default
-        # green
-        luminance = self.form.process_sub_region()
-        self.assertEqual(luminance, 42)
-        
         # Change the color of the widget, repeat check
         bw.setStyleSheet( "QWidget { background-color: red}")
         QtTest.QTest.qWait(100)
-        self.form.get_region()
-        luminance = self.form.process_sub_region()
-        self.assertEqual(luminance, 85)
-        
+        avg = self.form.get_and_process_region()
+        self.assertEqual(float(avg), 0.33)
         QtTest.QTest.qWait(2000)
 
 

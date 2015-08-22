@@ -71,37 +71,3 @@ class Test(unittest.TestCase):
         self.assertTrue(bad_font in curr_text)
         QtTest.QTest.qWait(3000)
 
-
-    def test_no_intermediate_file(self):
-        # Don't use pillow, use qimage to get pixel values
-        self.app = QtGui.QApplication(sys.argv)
-        self.form = rotate.Rotate()
-        
-        bw = rotate.BackgroundWidget()
-        #QtTest.QTest.qWait(500)
-
-        # Wait for both widgets to exist, then raise them in order to
-        # ensure that the background widget is behind the luminance
-        # designator
-        bw.raise_()
-        self.form.raise_()
-        QtTest.QTest.qWait(500)
-
-        # Trigger the startup animation
-        self.form.startup_animation()
-        QtTest.QTest.qWait(2000)
-
-        # From the entire window, grab just a square region inside the
-        # designator rotation area
-        avg = self.form.get_and_process_region()
-        self.assertEqual(float(avg), 0.25)
-
-        # Change the color of the widget, repeat check
-        bw.setStyleSheet( "QWidget { background-color: red}")
-        QtTest.QTest.qWait(100)
-        avg = self.form.get_and_process_region()
-        self.assertEqual(float(avg), 0.33)
-        
-        QtTest.QTest.qWait(2000)
-
-

@@ -12,7 +12,6 @@ Requirements
 
   * PyQt 4.7+
   * NumPy
-  * pillow
   * Known to run on Windows, Linux
 
 Installation Methods
