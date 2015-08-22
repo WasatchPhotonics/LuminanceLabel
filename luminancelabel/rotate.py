@@ -5,7 +5,6 @@ import sys
 import numpy
 
 from PyQt4 import QtGui, QtCore, QtSvg
-from PIL import Image
 
 class Rotate(QtGui.QWidget):
     """ SVG Overlay designator and on-screen luminance measurements.
@@ -22,6 +21,10 @@ class Rotate(QtGui.QWidget):
         self.initUI()
 
     def initUI(self):
+        """ Establish all interface components, hide them for initial
+        startup state. Trigger an automatic closing timer for a ui with
+        no close buttons, and no window, and no taskbar entry.
+        """
         self.vbox_layout = QtGui.QVBoxLayout()
         self.vbox_layout.setSpacing(0)
         self.vbox_layout.setMargin(0)
@@ -30,8 +33,14 @@ class Rotate(QtGui.QWidget):
         self.lblLuminance.setContentsMargins(75, 0, 0, 0)
         self.lblLuminance.setVisible(False)
 
+        # Auto-close timer
         self.closeTimer = QtCore.QBasicTimer()
         self.closeTimer.start(self._close_wait, self)
+
+        # Luminance capture timer
+        self.luminanceTimer = QtCore.QTimer()
+        self.luminanceTimer.setInterval(1000)
+        self.luminanceTimer.timeout.connect(self.update_luminance)
 
         fname = "luminancelabel/ui/RotateDesignate.svg"
         self.lblSvg = QtSvg.QSvgWidget(fname, self)
@@ -54,6 +63,9 @@ class Rotate(QtGui.QWidget):
         self.show()
 
     def startup_animation(self, duration=1000):
+        """ Expand the svg width width to draw attention to the region
+        of luminance measurement.
+        """
         qpa = QtCore.QPropertyAnimation
         self.start_anim = qpa(self.lblSvg, "minimumWidth")
         self.start_anim.setDuration(1000)
@@ -62,7 +74,17 @@ class Rotate(QtGui.QWidget):
         self.start_anim.setEndValue(800)
         self.start_anim.start()
 
-    def display_value(self, luminance, red_level=10):
+        # Start the luminance timer immediately for text updates
+        self.luminanceTimer.start(1)
+
+    def update_luminance(self):
+        """ Timer-triggered function to get the luminance value and
+        update the interface.
+        """
+        lum = self.get_and_process_region()
+        self.display_value(lum)
+
+    def display_value(self, luminance, red_level=0.10):
         """ Given a number to display, if it is less than the red_level
         threshold, color the luminance text red.
         """
@@ -71,7 +93,7 @@ class Rotate(QtGui.QWidget):
 
         lbl = self.lblLuminance
         lbl.setVisible(True)
-        if int(luminance) <= red_level:
+        if float(luminance) <= red_level:
             lbl.setText(bad_font + "%s </font>" % luminance)
         else:
             lbl.setText(ok_font + "%s </font>" % luminance)
@@ -79,11 +101,13 @@ class Rotate(QtGui.QWidget):
         return True 
 
     def timerEvent(self, event):
+        """ BasicTimer triggered event to close the application.
+        """
         quit_msg = "Auto-close"
-        self.lblLuminance.setText(quit_msg)
         print quit_msg
         self.closeTimer.stop()
         self.close()
+        sys.exit(1)
 
     def get_and_process_region(self):
         """ Use Qt's grabWindow function, convert to QImage, and process
@@ -108,7 +132,6 @@ class Rotate(QtGui.QWidget):
         desktop = QtGui.QApplication.desktop().winId()
         grb = QtGui.QPixmap.grabWindow
         result = grb(desktop, stX, stY, grab_width, grab_height)
-        #result.save("pre-process.png")
 
         # Convert pixmap to qimage
         region = result.toImage()
@@ -137,7 +160,6 @@ class Rotate(QtGui.QWidget):
 
             x += 1
 
-        #print "Computed: %0.2f" % numpy.average(all_pixels)    
         return "%0.2f" % numpy.average(all_pixels)
    
 
@@ -158,4 +180,5 @@ class BackgroundWidget(QtGui.QWidget):
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     rt = Rotate()
+    rt.startup_animation()
     sys.exit(app.exec_())
