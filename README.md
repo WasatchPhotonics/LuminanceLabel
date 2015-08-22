@@ -1,14 +1,22 @@
-LuminanceLabel - overlay and on-screen luminance measurement
+LuminanceLabel
+=========
 
-Use PyQt and svg graphics create a designator on screen, and a
-measurement of the luminance under the designator. 
+Overlay and on-screen luminance measurments
+
+<http://www.pyqtgraph.org>
+
     
 
-Requires:
-    PyQt4
-    pillow
-    numpy
+Requirements
+------------
 
+  * PyQt 4.7+
+  * NumPy
+  * pillow
+  * Known to run on Windows, Linux
+
+Installation Methods
+--------------------
 VirtualEnv notes:
     This package was developed in a python virtualenv created by
 following the instructions at:
@@ -16,7 +24,7 @@ http://www.expobrain.net/2013/01/23/build-pyqt4-into-your-virtualenv/
 
 Read below for instructions on how to setup a pyqt4 virtualenv.
 Alternatively, just run:
-sudo dnf install pyqt4<specifics for your platform>
+sudo dnf install pyqt4
 
 
 The steps required before that document can be executed are:
@@ -50,3 +58,16 @@ from PyQt4 import QtCore; print QtCore.PYQT_VERSION_STR
 
 If that prints the version strings, things should be correctly
 configured.
+
+Documentation
+-------------
+
+* First, run the tests with nose
+
+If all of the test pass, take a screenshot showing the full screen and
+the area of desired luminance detection. In the video example above,
+that would be something like: X:345, Y:295.
+
+* Run the program with: 
+    python LuminanceLabel/lumlabel.py --x 345 --y 295
+
