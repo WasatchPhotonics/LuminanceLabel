@@ -33,8 +33,10 @@ sudo dnf install gcc-c++
 sudo dnf install qt4-devel
 sudo dnf install qdevelop
 
-wget http://sourceforge.net/projects/pyqt/files/sip/sip-4.16.9/sip-4.16.9.tar.gz
-wget https://pypi.python.org/pypi/PyQt4/4.11.3
+wget 'http://sourceforge.net/projects/pyqt/files/sip/sip-4.16.9/\
+       sip-4.16.9.tar.gz'
+wget 'http://downloads.sourceforge.net/project/pyqt/PyQt4/PyQt-4.11.4/\
+       PyQt-x11-gpl-4.11.4.tar.gz'
 
 virtualenv venvpyqt4
 source venvpyqt4/bin/activate

@@ -115,10 +115,10 @@ class Rotate(QtGui.QWidget):
         """
         # SVG rotation center is approximately 382, 54 in inkscape
         # coordinates
-        grab_width = 40
-        grab_height = 40
+        grab_width = 20
+        grab_height = 20
         window_centerX = 382
-        window_centerY = 600 - 533 # inkscape coordinates
+        window_centerY = 600 - 523 # inkscape coordinates
 
         # Relative to the widget
         stX = window_centerX - (grab_width / 2)
@@ -137,7 +137,7 @@ class Rotate(QtGui.QWidget):
         region = result.toImage()
 
         all_pixels = []
-        # Computationally expensive, but ok for a 40x40 window
+        # Computationally expensive, but ok for a small window
         # Get pixel color with: http://stackoverflow.com/a/9134776
         # Get luminance Photometric/digital ITU-R conversion: 
         #   http://stackoverflow.com/a/596241
@@ -160,7 +160,13 @@ class Rotate(QtGui.QWidget):
 
             x += 1
 
-        return "%0.2f" % numpy.average(all_pixels)
+        avg = numpy.average(all_pixels)
+        #if avg > 0.26:
+            #result.save("over.png")
+        #elif avg < 0.25:
+            #result.save("under.png")
+
+        return "%0.2f" % avg
    
 
 class BackgroundWidget(QtGui.QWidget):
