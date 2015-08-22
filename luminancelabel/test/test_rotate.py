@@ -1,4 +1,4 @@
-""" Tests for LuminanceLabel 
+""" Tests for Rotate component of LuminanceLabel
 
 Segfaults at the end of test? See tearDown
 
@@ -24,7 +24,12 @@ class Test(unittest.TestCase):
         comments. Tried with no change in segfault behavior:
         setUpClass, split into multiple files, split into multiple
         testCase objects. The tests seem to process with validity, so
-        ignoring the test harness exit case for now. """
+        ignoring the test harness exit case for now. 
+
+        A workaround is to run each test individually with:
+        python -u -m unittest test_rotate.Test.test_XYZ
+
+        """
         pass
 
     def test_create_window_components(self):
@@ -47,14 +52,6 @@ class Test(unittest.TestCase):
         self.assertEqual(svgWidget.height(), 600)
         self.form.auto_close()
         QtTest.QTest.qWait(2000)
-
-
-    def test_auto_close_window(self):
-        # Assumes that non-visibility is an adequate descriptor of
-        # 'closed'
-        self.form.auto_close()
-        QtTest.QTest.qWait(2000)
-        self.assertFalse(self.form.isVisible())
 
 
     def test_animate_components(self):

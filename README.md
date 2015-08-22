@@ -1,7 +1,7 @@
 LuminanceLabel
 =========
 
-Overlay and on-screen luminance measurments
+Overlay and on-screen luminance measurements
 
 Demonstration video:
 https://youtu.be/9qmNLBNOKwY

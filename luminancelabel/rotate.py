@@ -1,4 +1,4 @@
-""" LuminanceLabel 
+""" rotate - rotation designator for luminance labelling
 """
 
 import sys
@@ -10,9 +10,13 @@ from PIL import Image
 class Rotate(QtGui.QWidget):
     """ SVG Overlay designator and on-screen luminance measurements.
     """
-    def __init__(self):
+    def __init__(self, x=300, y=300, close_wait=4000):
         super(Rotate, self).__init__()
 
+        self._startX = x
+        self._startY = y
+        self._close_wait = close_wait
+        
         self.startup_easing = QtCore.QEasingCurve.OutInQuart
 
         self.initUI()
@@ -22,6 +26,7 @@ class Rotate(QtGui.QWidget):
         self.lblLuminance.move(20, 20)
 
         self.closeTimer = QtCore.QBasicTimer()
+        self.closeTimer.start(self._close_wait, self)
 
         fname = "luminancelabel/ui/squareRotateDesignate.svg"
         self.lblSvg = QtSvg.QSvgWidget(fname, self)
@@ -38,7 +43,7 @@ class Rotate(QtGui.QWidget):
             | QtCore.Qt.WindowStaysOnTopHint)
 
 
-        self.setGeometry(300, 300, 800, 600)
+        self.setGeometry(self._startX, self._startY, 800, 600)
         self.setWindowTitle("LuminanceLabel - Rotate")
         self.show()
 
@@ -51,8 +56,6 @@ class Rotate(QtGui.QWidget):
         self.start_anim.setEndValue(800)
         self.start_anim.start()
 
-    def auto_close(self, duration=1000):
-        self.closeTimer.start(duration, self)
 
     def timerEvent(self, event):
         quit_msg = "Auto-close"
