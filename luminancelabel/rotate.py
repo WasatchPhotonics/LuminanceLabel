@@ -22,19 +22,24 @@ class Rotate(QtGui.QWidget):
         self.initUI()
 
     def initUI(self):
+        self.vbox_layout = QtGui.QVBoxLayout()
+        self.vbox_layout.setSpacing(0)
+        self.vbox_layout.setMargin(0)
+
         self.lblLuminance = QtGui.QLabel("Default", self)
-        self.lblLuminance.move(20, 20)
+        self.lblLuminance.setContentsMargins(75, 0, 0, 0)
+        self.lblLuminance.setVisible(False)
 
         self.closeTimer = QtCore.QBasicTimer()
         self.closeTimer.start(self._close_wait, self)
 
-        fname = "luminancelabel/ui/squareRotateDesignate.svg"
+        fname = "luminancelabel/ui/RotateDesignate.svg"
         self.lblSvg = QtSvg.QSvgWidget(fname, self)
         self.lblSvg.setMaximumWidth(0)
         self.lblSvg.setMinimumWidth(0)
         
-        #self.txt = QLabel("<font color='red' size=12>Detect luminance</font")
-        #self.txt.setContentsMargins(70,0,0,0)
+        self.vbox_layout.addWidget(self.lblLuminance)
+        self.vbox_layout.addWidget(self.lblSvg)
 
         # Requires a compositing window manager to be translucent
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground) 
@@ -43,6 +48,7 @@ class Rotate(QtGui.QWidget):
             | QtCore.Qt.WindowStaysOnTopHint)
 
 
+        self.setLayout(self.vbox_layout)
         self.setGeometry(self._startX, self._startY, 800, 600)
         self.setWindowTitle("LuminanceLabel - Rotate")
         self.show()
@@ -56,6 +62,21 @@ class Rotate(QtGui.QWidget):
         self.start_anim.setEndValue(800)
         self.start_anim.start()
 
+    def display_value(self, luminance, red_level=10):
+        """ Given a number to display, if it is less than the red_level
+        threshold, color the luminance text red.
+        """
+        ok_font = "<font color='lightgreen' size=5>Average luminance: "
+        bad_font = "<font color='red' size=5>Average luminance: " 
+
+        lbl = self.lblLuminance
+        lbl.setVisible(True)
+        if int(luminance) <= red_level:
+            lbl.setText(bad_font + "%s </font>" % luminance)
+        else:
+            lbl.setText(ok_font + "%s </font>" % luminance)
+           
+        return True 
 
     def timerEvent(self, event):
         quit_msg = "Auto-close"
@@ -132,11 +153,7 @@ class BackgroundWidget(QtGui.QWidget):
         self.setWindowTitle("LuminanceLabel - Background")
         self.show()
        
- 
-def main():
+if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     rt = Rotate()
     sys.exit(app.exec_())
- 
-if __name__ == "__main__":
-    main()

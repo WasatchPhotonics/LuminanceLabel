@@ -50,7 +50,6 @@ class Test(unittest.TestCase):
         svgWidget = all_svg[0]
         self.assertEqual(svgWidget.width(), 0)
         self.assertEqual(svgWidget.height(), 600)
-        self.form.auto_close()
         QtTest.QTest.qWait(2000)
 
 
@@ -66,7 +65,6 @@ class Test(unittest.TestCase):
         svgWidget = all_svg[0]
         self.assertEqual(svgWidget.width(), 800)
         self.assertEqual(svgWidget.height(), 600)
-        self.form.auto_close()
         QtTest.QTest.qWait(2000)
 
     def test_luminance_computation(self):
@@ -109,7 +107,6 @@ class Test(unittest.TestCase):
         luminance = self.form.process_sub_region()
         self.assertEqual(luminance, 85)
         
-        self.form.auto_close()
         QtTest.QTest.qWait(2000)
 
 
