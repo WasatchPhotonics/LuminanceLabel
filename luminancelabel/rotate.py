@@ -83,6 +83,7 @@ class Rotate(QtGui.QWidget):
         """
         lum = self.get_and_process_region()
         self.display_value(lum)
+        pass
 
     def display_value(self, luminance, red_level=0.10):
         """ Given a number to display, if it is less than the red_level

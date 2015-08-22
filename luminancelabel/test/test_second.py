@@ -18,10 +18,9 @@ class Test(unittest.TestCase):
         self.form = rotate.Rotate()
 
     def tearDown(self):
-        #self.app.processEvents()
-        self.form.setParent(None)
+        # Critical, also dependent on order of test file run in nose,
+        # see tearDown in first test file for details
         self.app.closeAllWindows()
-        QtGui.QApplication.quit() 
 
     def test_luminance_computation(self):
         #self.app = QtGui.QApplication(sys.argv)

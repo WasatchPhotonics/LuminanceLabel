@@ -30,9 +30,9 @@ class Test(unittest.TestCase):
 
         """
         #self.app.processEvents()
-        self.form.setParent(None)
+        #self.form.setParent(None)
         self.app.closeAllWindows()
-        QtGui.QApplication.quit() 
+        #QtGui.QApplication.quit() 
         pass
 
     def test_create_window_components(self):
