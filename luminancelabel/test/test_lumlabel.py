@@ -71,9 +71,3 @@ class Test(unittest.TestCase):
         self.assertTrue(bad_font in curr_text)
         QtTest.QTest.qWait(3000)
 
-    def test_performance(self):
-        """ 
-        # Create a background image that cycles every N milliseconds
-        """
-        pass
-        # through a known set of color values, 

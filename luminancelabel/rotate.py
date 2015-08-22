@@ -176,9 +176,3 @@ class BackgroundWidget(QtGui.QWidget):
         self.setGeometry(100, 100, 800, 600)
         self.setWindowTitle("LuminanceLabel - Background")
         self.show()
-       
-if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    rt = Rotate()
-    rt.startup_animation()
-    sys.exit(app.exec_())
