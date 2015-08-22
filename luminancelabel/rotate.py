@@ -84,6 +84,61 @@ class Rotate(QtGui.QWidget):
         print quit_msg
         self.closeTimer.stop()
         self.close()
+
+    def get_and_process_region(self):
+        """ Use Qt's grabWindow function, convert to QImage, and process
+        luminance values.
+        """
+        # SVG rotation center is approximately 382, 54 in inkscape
+        # coordinates
+        grab_width = 40
+        grab_height = 40
+        window_centerX = 382
+        window_centerY = 600 - 533 # inkscape coordinates
+
+        # Relative to the widget
+        stX = window_centerX - (grab_width / 2)
+        stY = window_centerY - (grab_height / 2)
+
+        # Now find the current position of the widget and add that to
+        # the starting coordinates
+        stX += self.x()
+        stY += self.y()
+
+        desktop = QtGui.QApplication.desktop().winId()
+        grb = QtGui.QPixmap.grabWindow
+        result = grb(desktop, stX, stY, grab_width, grab_height)
+        #result.save("pre-process.png")
+
+        # Convert pixmap to qimage
+        region = result.toImage()
+
+        all_pixels = []
+        # Computationally expensive, but ok for a 40x40 window
+        # Get pixel color with: http://stackoverflow.com/a/9134776
+        # Get luminance Photometric/digital ITU-R conversion: 
+        #   http://stackoverflow.com/a/596241
+
+        x = 0
+        while x < (grab_width):
+            y = 0
+            while y < (grab_height):
+                cpixel = region.pixel(x, y)
+                colors = QtGui.QColor(cpixel).getRgbF()
+
+                red = colors[0]
+                gre = colors[1]
+                blu = colors[2]
+                lum = (red + red + blu + gre + gre + gre) / 6
+
+                #print "QIMG %s,%s is %s lum %s" % (x, y, colors, lum)
+                all_pixels.append(lum)
+                y += 1
+
+            x += 1
+
+        #print "Computed: %0.2f" % numpy.average(all_pixels)    
+        return "%0.2f" % numpy.average(all_pixels)
    
     def get_region(self):
         # SVG rotation center is approximately 382, 54 in inkscape
@@ -126,6 +181,7 @@ class Rotate(QtGui.QWidget):
                 y = stY
                 while y < (stY + height):
                     cpixel = pixels[x, y]
+                    print "PILLOW pixel at %s,%s is %s" % (x, y, cpixel)
                     bw_value = sum(cpixel) / len(cpixel)
                     #print "pixel: %s, %s" % (cpixel, bw_value)
                     all_pixels.append(bw_value)
