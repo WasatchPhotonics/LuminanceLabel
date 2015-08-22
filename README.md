@@ -3,8 +3,8 @@ LuminanceLabel
 
 Overlay and on-screen luminance measurments
 
-<http://www.pyqtgraph.org>
-
+Demonstration video:
+https://youtu.be/9qmNLBNOKwY
     
 
 Requirements
