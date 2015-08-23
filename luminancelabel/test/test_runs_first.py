@@ -52,5 +52,20 @@ class Test(unittest.TestCase):
         avg = self.form.get_and_process_region()
         self.assertEqual(float(avg), 0.33)
 
+    def test_fade_out(self):
+        # create, trigger startup animation
+        self.form.startup_animation()
+        QtTest.QTest.qWait(3000)
+
+        wid_opac = self.form.windowOpacity()
+        self.assertEqual(wid_opac, 1.0) 
+
+        # get the window opacity about midway through the default fade
+        # out time, which is 1 second after the close_wait parameter
+        QtTest.QTest.qWait(500)
+        wid_opac = self.form.windowOpacity()
+        self.assertLess(wid_opac, 1.0) 
+        self.assertGreater(wid_opac, 0.1) 
+
 if __name__ == "__main__":
     unittest.main()

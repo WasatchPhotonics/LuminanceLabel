@@ -37,6 +37,12 @@ class Rotate(QtGui.QWidget):
         self.closeTimer = QtCore.QBasicTimer()
         self.closeTimer.start(self._close_wait, self)
 
+        # Fade-out timer
+        self.fadeTimer = QtCore.QTimer()
+        self.fadeTimer.setInterval(self._close_wait - 1000)
+        self.fadeTimer.timeout.connect(self.fade_out)
+        self.fadeTimer.start()
+
         # Luminance capture timer
         self.luminanceTimer = QtCore.QTimer()
         self.luminanceTimer.setInterval(1000)
@@ -77,6 +83,17 @@ class Rotate(QtGui.QWidget):
         # Start the luminance timer immediately for text updates
         self.luminanceTimer.start(1)
 
+
+    def fade_out(self):
+        """ Execute the fade out animation of the entire widget.
+        """
+        qpa = QtCore.QPropertyAnimation
+        self.fade_anim = qpa(self, "windowOpacity")
+        self.fade_anim.setDuration(1000)
+        self.fade_anim.setStartValue(1.0)
+        self.fade_anim.setEndValue(0.0)
+        self.fade_anim.start()
+        
     def update_luminance(self):
         """ Timer-triggered function to get the luminance value and
         update the interface.

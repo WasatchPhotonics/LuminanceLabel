@@ -27,13 +27,10 @@ class Test(unittest.TestCase):
 
         A workaround is to run each test individually with:
         python -u -m unittest test_rotate.Test.test_XYZ
-
         """
-        #self.app.processEvents()
-        #self.form.setParent(None)
+
         self.app.closeAllWindows()
-        #QtGui.QApplication.quit() 
-        pass
+        
 
     def test_create_window_components(self):
         self.assertEqual(self.form.lblLuminance.text(), "Default")
