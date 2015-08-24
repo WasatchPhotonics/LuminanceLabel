@@ -56,7 +56,7 @@ class Rotate(QtGui.QWidget):
         self.luminanceTimer.setInterval(1000)
         self.luminanceTimer.timeout.connect(self.update_luminance)
 
-        fname = "luminancelabel/ui/RotateDesignate.svg"
+        fname = "luminancelabel/ui/TriangleRotate.svg"
         self.lblSvg = QtSvg.QSvgWidget(fname, self)
         self.lblSvg.setMaximumWidth(0)
         self.lblSvg.setMinimumWidth(0)
