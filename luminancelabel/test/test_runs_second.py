@@ -65,16 +65,19 @@ class Test(unittest.TestCase):
         svgWidget = all_svg[0]
         self.assertEqual(svgWidget.width(), 800)
     
-        # animated out side is not quite 600
-        self.assertEqual(svgWidget.height(), 576)
+        # animated out side is not quite 600. On linux it is 576 and on
+        # ms windows it is 579. Make it a range for cross platform
+        # checks.
+        self.assertGreater(svgWidget.height(), 560)
+        self.assertLess(svgWidget.height(), 610)
 
         #  !!!!!!!!!!!!!!!!!!!!! @@@@@@@@@@@@@@@@@@@@@@@               #
         #
-        #  Don't wait for longer than the close. This leads to failures
-        #  of the nose. Seriously, it just quits with no information
-        #  printed. No "Ran X test..", no coverage summary, no segfault
-        #  info, nothing. Same for unittest. Leaving this in here for a
-        #  reminder
+        #  Don't wait for longer than the auto close delay. This leads
+        #  to failures of the nose. Seriously, it just quits with no
+        #  information printed. No "Ran X test..", no coverage summary,
+        #  no segfault info, nothing. Same for unittest. Leaving this in
+        #  here for a reminder
         #
         #  !!!!!!!!!!!!!!!!!!!!! @@@@@@@@@@@@@@@@@@@@@@@               #
         QtTest.QTest.qWait(10)
