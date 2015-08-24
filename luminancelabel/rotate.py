@@ -1,4 +1,12 @@
 """ rotate - rotation designator for luminance labelling
+
+Uses PyQt to place a transparent overlay on the screen, takes a
+screenshot and processes the area underneath the overlay designator.
+Luminance values are computed and displayed on the label, and written to
+stdout.
+
+This is used for evaluting the displayed imagery at multiple frames per
+second for imaging software.
 """
 
 import sys
@@ -127,7 +135,7 @@ class Rotate(QtGui.QWidget):
         self.close()
 
     def closeEvent(self, event):
-        #print "In close event"
+        # .quit required for test cases to exit 
         QtGui.QApplication.quit()
         event.accept()
 
@@ -183,10 +191,6 @@ class Rotate(QtGui.QWidget):
             x += 1
 
         avg = numpy.average(all_pixels)
-        #if avg > 0.26:
-            #result.save("over.png")
-        #elif avg < 0.25:
-            #result.save("under.png")
 
         return "%0.2f" % avg
    

@@ -10,7 +10,6 @@ stdout.
 
 This is used for evaluting the displayed imagery at multiple frames per
 second for imaging software.
-
 """
 
 import sys
