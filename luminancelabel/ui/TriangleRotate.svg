@@ -28,9 +28,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.0105874"
-     inkscape:cx="382.73465"
-     inkscape:cy="524.21784"
-     inkscape:current-layer="layer3"
+     inkscape:cx="389.52028"
+     inkscape:cy="525.51509"
+     inkscape:current-layer="g3814-5"
      inkscape:document-units="px"
      showgrid="false"
      inkscape:window-width="1920"
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -113,20 +113,20 @@
        style="display:inline"
        id="g3814-5">
       <rect
-         y="78.651817"
-         x="265.27289"
-         height="10.099456"
-         width="6.120882"
+         y="76.485275"
+         x="264.94931"
+         height="10.624027"
+         width="8.1651144"
          id="rect4448-7"
-         style="fill:#ffffff;fill-opacity:1;stroke:#ff3b00;stroke-width:0.71554178;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+         style="fill:#ffffff;fill-opacity:1;stroke:#ff3b00;stroke-width:0.84762692;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <rect
          transform="scale(-1,-1)"
-         y="-78.731117"
-         x="-269.80869"
-         height="3.8889549"
-         width="2.9506857"
+         y="-76.568695"
+         x="-270.99994"
+         height="4.0909491"
+         width="3.9361463"
          id="rect4448-5-4"
-         style="fill:#ffffff;fill-opacity:1;stroke:#ff3b00;stroke-width:0.30828822;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" />
+         style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#ff3b00;stroke-width:0.36519656;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <use
        x="0"
