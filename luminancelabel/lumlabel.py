@@ -24,7 +24,7 @@ if __name__ == "__main__":
                         help="X position in screen pixels")
     parser.add_argument("-y", "--y", type=int, default=100,
                         help="Y position in screen pixels")
-    parser.add_argument("-w", "--wait", default=4000,
+    parser.add_argument("-w", "--wait", type=int, default=4000,
                         help="Time (ms) to delay before closing")
     args = parser.parse_args()
 
