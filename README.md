@@ -39,24 +39,3 @@ that would be something like: X:345, Y:295.
 
     python LuminanceLabel/lumlabel.py --x 345 --y 295
 
-Special Note about tests
--------------
-
-Are you seeing segfaults after the tests complete succesfully? See:
-http://johnnado.com/pyqt-qtest-example/ comments. Tried with no change
-in segfault behavior: setUpClass, split into multiple files, split into
-multiple testCase objects. The tests seem to process with validity, so
-ignoring the test harness exit case for now. 
-
-A workaround is to run each test individually with: python -u -m
-unittest test_runs_first.Test.test_XYZ
-
-The alphabetical file naming convention for the
-luminancelabel/test/test_* files is so nose will run them in order.
-Unfortunately this seems to be the only way to prevent the segfault that
-appears everytime the test is run from adversely impacting the full
-testing procedure. If the tests are run in order specified by the file
-naming convention, 100% coverage is achieved. In addition, certain tests
-will correctly process through nose only when separated into a different
-file, thus the runs_first, runs_second requirements. 
-

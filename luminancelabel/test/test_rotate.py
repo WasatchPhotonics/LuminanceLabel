@@ -1,7 +1,5 @@
 """ Tests for Rotate component of LuminanceLabel
 
-Segfaults at the end of test? See tearDown
-
 """
 
 import unittest
@@ -19,20 +17,6 @@ class Test(unittest.TestCase):
         self.form = rotate.Rotate()
 
     def tearDown(self):
-        """ Are you seeing segfaults after the tests complete
-        succesfully? See: http://johnnado.com/pyqt-qtest-example/ 
-        comments. Tried with no change in segfault behavior:
-        setUpClass, split into multiple files, split into multiple
-        testCase objects. The tests seem to process with validity, so
-        ignoring the test harness exit case for now. 
-
-        A workaround is to run each test individually with:
-        python -u -m unittest test_rotate.Test.test_XYZ
-
-        The real fix appears to be to move the QApplication call out of
-        the setup entirely, and put it at the module level.
-        """
-
         app.closeAllWindows()
         
 
@@ -119,17 +103,6 @@ class Test(unittest.TestCase):
         # checks.
         self.assertGreater(svgWidget.height(), 560)
         self.assertLess(svgWidget.height(), 610)
-
-        #  !!!!!!!!!!!!!!!!!!!!! @@@@@@@@@@@@@@@@@@@@@@@               #
-        #
-        #  Don't wait for longer than the auto close delay. This leads
-        #  to failures of the nose. Seriously, it just quits with no
-        #  information printed. No "Ran X test..", no coverage summary,
-        #  no segfault info, nothing. Same for unittest. Leaving this in
-        #  here for a reminder
-        #
-        #  !!!!!!!!!!!!!!!!!!!!! @@@@@@@@@@@@@@@@@@@@@@@               #
-        QtTest.QTest.qWait(10)
 
 if __name__ == "__main__":
     unittest.main()
