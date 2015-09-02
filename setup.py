@@ -13,7 +13,7 @@ config = {
     "install_requires": ["numpy", "PyQt4"],
     "packages": ["LuminanceLabel"],
     "scripts": [],
-    "name"; "LuminanceLabel"
+    "name": "LuminanceLabel"
 }
 
 setup(**config)
