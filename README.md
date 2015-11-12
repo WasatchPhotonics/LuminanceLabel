@@ -4,7 +4,7 @@ LuminanceLabel
 Animated overlay and on-screen luminance measurements
 
 
-![lumninancelabel screenshot](/docs/example_image.png "luminancelabel screenshot")
+![lumninancelabel screenshot](/docs/LuminanceLabel.gif "luminancelabel screenshot")
 
 Demonstration video:
 https://youtu.be/9qmNLBNOKwY
